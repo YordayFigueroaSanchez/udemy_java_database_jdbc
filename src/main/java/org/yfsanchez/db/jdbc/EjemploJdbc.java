@@ -15,7 +15,13 @@ public class EjemploJdbc {
              ResultSet resultSet = statement.executeQuery("select * from productos")) {
 
             while (resultSet.next()){
-                System.out.println(resultSet.getString("nombre"));
+                System.out.print(resultSet.getInt("id"));
+                System.out.print(" | ");
+                System.out.print(resultSet.getString("nombre"));
+                System.out.print(" | ");
+                System.out.print(resultSet.getInt("precio"));
+                System.out.print(" | ");
+                System.out.println(resultSet.getDate("fecha"));
             }
 
         } catch (SQLException e) {
