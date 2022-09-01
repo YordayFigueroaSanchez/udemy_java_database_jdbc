@@ -1,16 +1,13 @@
 package org.yfsanchez.db.jdbc;
 
+import org.yfsanchez.db.jdbc.utils.ConectionDataBase;
+
 import java.sql.*;
 
 public class EjemploJdbc {
     public static void main(String[] args) {
 
-        String url = "jdbc:mysql://localhost:3306/java_curso";
-        String username = "root";
-        String password = "geocom";
-
-
-        try (Connection connection = DriverManager.getConnection(url, username, password);
+        try (Connection connection = ConectionDataBase.getIntance();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery("select * from productos")) {
 
