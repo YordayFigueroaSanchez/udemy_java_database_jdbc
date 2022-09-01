@@ -9,28 +9,17 @@ public class EjemploJdbc {
         String username = "root";
         String password = "geocom";
 
-        Connection connection = null;
-        Statement statement = null;
-        ResultSet resultSet = null;
-        try {
-            connection = DriverManager.getConnection(url, username, password);
-            statement = connection.createStatement();
-            resultSet = statement.executeQuery("select * from productos");
+
+        try (Connection connection = DriverManager.getConnection(url, username, password);
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery("select * from productos")) {
+
             while (resultSet.next()){
                 System.out.println(resultSet.getString("nombre"));
             }
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } finally {
-            try {
-                resultSet.close();
-                statement.close();
-                connection.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-
         }
     }
 }
