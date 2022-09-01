@@ -8,18 +8,29 @@ public class EjemploJdbc {
         String url = "jdbc:mysql://localhost:3306/java_curso";
         String username = "root";
         String password = "geocom";
+
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
         try {
-            Connection connection = DriverManager.getConnection(url, username, password);
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("select * from productos");
+            connection = DriverManager.getConnection(url, username, password);
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery("select * from productos");
             while (resultSet.next()){
                 System.out.println(resultSet.getString("nombre"));
             }
-            resultSet.close();
-            statement.close();
-            connection.close();
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+            try {
+                resultSet.close();
+                statement.close();
+                connection.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
         }
     }
 }
