@@ -50,4 +50,14 @@ public class Producto {
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
+
+    @Override
+    public String toString() {
+        return "Producto{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", precio=" + precio +
+                ", fecha=" + fecha +
+                '}';
+    }
 }

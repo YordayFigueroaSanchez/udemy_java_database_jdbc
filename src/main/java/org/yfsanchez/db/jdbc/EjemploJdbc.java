@@ -1,5 +1,8 @@
 package org.yfsanchez.db.jdbc;
 
+import org.yfsanchez.db.jdbc.model.Producto;
+import org.yfsanchez.db.jdbc.repository.Repository;
+import org.yfsanchez.db.jdbc.repository.RepositoryProductoImpl;
 import org.yfsanchez.db.jdbc.utils.ConectionDataBase;
 
 import java.sql.*;
@@ -7,19 +10,12 @@ import java.sql.*;
 public class EjemploJdbc {
     public static void main(String[] args) {
 
-        try (Connection connection = ConectionDataBase.getIntance();
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("select * from productos")) {
+        try (
+                Connection connection = ConectionDataBase.getIntance();
+             ) {
 
-            while (resultSet.next()){
-                System.out.print(resultSet.getInt("id"));
-                System.out.print(" | ");
-                System.out.print(resultSet.getString("nombre"));
-                System.out.print(" | ");
-                System.out.print(resultSet.getInt("precio"));
-                System.out.print(" | ");
-                System.out.println(resultSet.getDate("fecha"));
-            }
+            Repository<Producto> repositoryProduto = new RepositoryProductoImpl();
+            repositoryProduto.listar().forEach(p -> System.out.println(p.toString()));
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
