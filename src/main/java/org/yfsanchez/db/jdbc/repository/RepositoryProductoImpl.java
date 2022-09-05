@@ -57,7 +57,25 @@ public class RepositoryProductoImpl implements Repository<Producto>{
 
     @Override
     public void guardar(Producto producto) {
+        String sql;
+        if (producto.getId() != null && producto.getId() > 0) {
+            sql = "UPDATE productos SET nombre=?, precio=? WHERE id=?";
+        } else {
+            sql = "INSERT INTO productos(nombre,precio,fecha) VALUES(?,?,?)";
+        }
+        try(PreparedStatement preparedStatement = getConnection().prepareStatement(sql)) {
+            preparedStatement.setString(1,producto.getNombre());
+            preparedStatement.setInt(2,producto.getPrecio());
+            if (producto.getId() != null && producto.getId() > 0) {
+                preparedStatement.setLong(3, producto.getId());
+            } else {
+                preparedStatement.setDate(3, new Date(producto.getFecha().getTime()));
+            }
 
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
