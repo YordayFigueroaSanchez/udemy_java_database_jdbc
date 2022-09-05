@@ -44,11 +44,11 @@ public class RepositoryProductoImpl implements Repository<Producto>{
         try(PreparedStatement preparedStatement = getConnection().
                 prepareStatement("SELECT * FROM productos WHERE id=?")){
             preparedStatement.setLong(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()){
-                producto = createProducto(resultSet);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    producto = createProducto(resultSet);
+                }
             }
-            resultSet.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
