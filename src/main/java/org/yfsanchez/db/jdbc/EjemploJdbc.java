@@ -17,6 +17,8 @@ public class EjemploJdbc {
             Repository<Producto> repositoryProduto = new RepositoryProductoImpl();
             repositoryProduto.listar().forEach(p -> System.out.println(p.toString()));
 
+            System.out.println(repositoryProduto.porId(1L));
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
