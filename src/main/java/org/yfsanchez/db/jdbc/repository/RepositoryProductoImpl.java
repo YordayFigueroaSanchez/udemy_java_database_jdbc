@@ -80,6 +80,12 @@ public class RepositoryProductoImpl implements Repository<Producto>{
 
     @Override
     public void eliminar(Long id) {
-
+        String sql = "DELETE FROM productos WHERE id=?";
+        try(PreparedStatement preparedStatement = getConnection().prepareStatement(sql)) {
+            preparedStatement.setLong(1,id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
