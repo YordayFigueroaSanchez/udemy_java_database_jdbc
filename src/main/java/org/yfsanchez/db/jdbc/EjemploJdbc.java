@@ -1,5 +1,6 @@
 package org.yfsanchez.db.jdbc;
 
+import org.yfsanchez.db.jdbc.model.Categoria;
 import org.yfsanchez.db.jdbc.model.Producto;
 import org.yfsanchez.db.jdbc.repository.Repository;
 import org.yfsanchez.db.jdbc.repository.RepositoryProductoImpl;
@@ -16,15 +17,20 @@ public class EjemploJdbc {
              ) {
 
             Repository<Producto> repositoryProduto = new RepositoryProductoImpl();
-            repositoryProduto.listar().forEach(p -> System.out.println(p.toString()));
 
             System.out.println(repositoryProduto.porId(1L));
 
-//            Producto producto = new Producto();
-//            producto.setNombre("Test03");
-//            producto.setPrecio(12);
-//            producto.setFecha(new Date());
-//            repositoryProduto.guardar(producto);
+            Producto producto = new Producto();
+            producto.setNombre("Test04");
+            producto.setPrecio(1234);
+            producto.setFecha(new Date());
+            Categoria categoria = new Categoria();
+            categoria.setId(1L);
+            producto.setCategoria(categoria);
+            repositoryProduto.guardar(producto);
+
+
+            repositoryProduto.listar().forEach(p -> System.out.println(p.toString()));
 
 //            Producto producto = new Producto();
 //            producto.setNombre("Test03");

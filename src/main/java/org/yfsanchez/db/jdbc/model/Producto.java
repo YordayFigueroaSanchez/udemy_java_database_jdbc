@@ -8,6 +8,15 @@ public class Producto {
     private String nombre;
     private int precio;
     private Date fecha;
+    private Categoria categoria;
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
 
     public Producto() {
     }
@@ -58,6 +67,7 @@ public class Producto {
                 ", nombre='" + nombre + '\'' +
                 ", precio=" + precio +
                 ", fecha=" + fecha +
+                ", categoria =" + categoria.getNombre() +
                 '}';
     }
 }
