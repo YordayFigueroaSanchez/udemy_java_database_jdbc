@@ -12,9 +12,6 @@ import java.util.Date;
 public class EjemploJdbc {
     public static void main(String[] args) {
 
-        try (
-                Connection connection = ConectionDataBase.getIntance();
-             ) {
 
             Repository<Producto> repositoryProduto = new RepositoryProductoImpl();
 
@@ -39,8 +36,5 @@ public class EjemploJdbc {
 //            producto.setId(3L);
 //            repositoryProduto.guardar(producto);
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 }
