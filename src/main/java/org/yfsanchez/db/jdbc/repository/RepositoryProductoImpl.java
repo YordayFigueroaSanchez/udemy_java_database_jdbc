@@ -16,12 +16,12 @@ public class RepositoryProductoImpl implements Repository<Producto>{
     @Override
     public List<Producto> listar() {
         List<Producto> productos = new ArrayList<>();
-        try(
-                Statement statement = getConnection().createStatement();
+        try(    Connection connection = getConnection();
+                Statement statement = connection.createStatement();
                 ResultSet resultSet = statement.executeQuery("SELECT p.*, c.nombre AS categoria " +
                         "FROM productos AS p " +
-                        "INNER JOIN categorias AS c ON (p.categoria_id = c.id)");
-                ) {
+                        "INNER JOIN categorias AS c ON (p.categoria_id = c.id)")
+        ) {
             while (resultSet.next()){
                 Producto producto = createProducto(resultSet);
                 productos.add(producto);
@@ -48,10 +48,13 @@ public class RepositoryProductoImpl implements Repository<Producto>{
     @Override
     public Producto porId(Long id) {
         Producto producto = null;
-        try(PreparedStatement preparedStatement = getConnection().
+        try(
+                Connection connection = getConnection();
+                PreparedStatement preparedStatement = connection.
                 prepareStatement("SELECT p.*, c.nombre AS categoria " +
                         "FROM productos AS p " +
-                        "INNER JOIN categorias AS c ON (p.categoria_id = c.id) WHERE p.id=?")){
+                        "INNER JOIN categorias AS c ON (p.categoria_id = c.id) WHERE p.id=?")
+        ){
             preparedStatement.setLong(1, id);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
@@ -72,7 +75,10 @@ public class RepositoryProductoImpl implements Repository<Producto>{
         } else {
             sql = "INSERT INTO productos(nombre,precio,categoria_id,fecha) VALUES(?,?,?,?)";
         }
-        try(PreparedStatement preparedStatement = getConnection().prepareStatement(sql)) {
+        try(
+                Connection connection = getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(sql)
+        ) {
             preparedStatement.setString(1,producto.getNombre());
             preparedStatement.setInt(2,producto.getPrecio());
             preparedStatement.setLong(3,producto.getCategoria().getId());
@@ -91,7 +97,10 @@ public class RepositoryProductoImpl implements Repository<Producto>{
     @Override
     public void eliminar(Long id) {
         String sql = "DELETE FROM productos WHERE id=?";
-        try(PreparedStatement preparedStatement = getConnection().prepareStatement(sql)) {
+        try(
+                Connection connection = getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(sql)
+        ) {
             preparedStatement.setLong(1,id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
