@@ -10,7 +10,7 @@ import java.util.List;
 
 public class RepositoryProductoImpl implements Repository<Producto>{
     private Connection getConnection() throws SQLException {
-        return ConectionDataBase.getIntance();
+        return ConectionDataBase.getConnection();
     }
 
     @Override
